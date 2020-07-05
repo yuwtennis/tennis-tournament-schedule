@@ -12,8 +12,10 @@ class MinamiIchikawaTennisGarden(TennisClub):
     """
     Display the result
     """
-    def display(self):
-        super().display(self._run())
+    def notify_to_console(self):
+        msgs = [ DISPLAY_FORMAT.format(k, d, s) for k, v in self._run().items() for d, s in v.items() ]
+
+        super().notify_to_console(msgs)
 
     """
     Run workflow

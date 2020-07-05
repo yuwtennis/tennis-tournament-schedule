@@ -2,6 +2,7 @@
 from pkgs.config import *
 import yaml
 import pprint
+import subprocess
 
 class TennisClub:
 
@@ -16,6 +17,7 @@ class TennisClub:
             return yaml.load(fd, Loader=yaml.FullLoader)
 
     def display(self, msgs):
-       # subprocess.run(['notify-send', '--expire-time=20000', 'トーナメント申し込み状況', '\n'.join(msgs)])
-
         pprint.pprint(msgs)
+
+    def notify_to_console(self, msgs):
+        subprocess.run(['notify-send', '--expire-time=20000', 'トーナメント申し込み状況', '\n'.join(msgs)])

@@ -6,19 +6,17 @@ from pkgs.config import *
 
 def main(club):
 
-    #try:
     if club not in MODULES:
         raise(ModuleNotFoundError())
 
     # Load base class
     c = getattr(import_module(MODULES[club]['module']), MODULES[club]['class'])
 
+    # Instantiate
     t = c()
 
-    t.display()
-
-    #except:
-    #    print('Something is wrong error: {}'.format(sys.exc_info()[0]))
+    # Notify
+    t.nofity_to_console()
 
 if __name__ == "__main__":
 

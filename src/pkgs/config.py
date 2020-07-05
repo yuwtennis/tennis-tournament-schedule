@@ -10,3 +10,5 @@ MODULES = {
         'module': 'pkgs.minami_ichikawa_tennis_garden'
      }
 }
+
+DISPLAY_FORMAT = '{} on {} is {}'

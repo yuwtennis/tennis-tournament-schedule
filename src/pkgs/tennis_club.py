@@ -1,11 +1,15 @@
 
-from config.py import *
+from pkgs.config import *
+import yaml
 import pprint
 
 class TennisClub:
 
     def __init__(self, tennis_club, yaml_file=YAML_FILE):
-        self.yaml = self._load_yaml(yaml_file, tennis_club)
+        self.yaml = self._load_yaml(yaml_file).get(tennis_club)
+
+        if self.yaml is None:
+            raise(RuntimeError())
 
     def _load_yaml(self, yaml_file):
         with open(yaml_file, 'r') as fd:

@@ -10,19 +10,27 @@ class MinamiIchikawaTennisGarden(TennisClub):
         super().__init__(TENNIS_CLUB_1)
 
     """
-    Display the result
+    Notify the result
     """
-    def notify_to_console(self):
-        msgs = [ DISPLAY_FORMAT.format(k, d, s) for k, v in self._run().items() for d, s in v.items() ]
+    def notify_to_console(self, schedules):
+        msgs = [ DISPLAY_FORMAT.format(k, d, s) for k, v in schedules.items() for d, s in v.items() ]
 
         super().notify_to_console(msgs)
 
     """
+    Display the result
+    """
+    def display(self, schedules):
+        msgs = [ DISPLAY_FORMAT.format(k, d, s) for k, v in schedules.items() for d, s in v.items() ]
+
+        super().display(msgs)
+
+    """
     Run workflow
     """ 
-    def _run(self):
+    def run(self):
 
-        schedule = dict()
+        schedules = dict()
 
         for u in self.yaml['urls']:
             scraped = self._scrape(u['url'],
@@ -31,9 +39,9 @@ class MinamiIchikawaTennisGarden(TennisClub):
 
             idx_list = self._find_indexes(u['filter'], scraped)
 
-            schedule.update({ k: self._extract(v, u['url']) for k, v in idx_list.items() })
+            schedules.update({ k: self._extract(v, u['url']) for k, v in idx_list.items() })
 
-        return schedule
+        return schedules
 
     """
     Extract schedule according to tournament

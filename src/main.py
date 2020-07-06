@@ -15,8 +15,13 @@ def main(club):
     # Instantiate
     t = c()
 
+    res = t.run()
+
+    # Display
+    t.display(res)
+
     # Notify
-    t.nofity_to_console()
+    t.notify_to_console(res)
 
 if __name__ == "__main__":
 

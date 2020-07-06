@@ -37,8 +37,11 @@ class MinamiIchikawaTennisGarden(TennisClub):
                 self.yaml['identifier']['key'],
                 self.yaml['identifier']['val'])
 
-            idx_list = self._find_indexes(u['filter'], scraped)
+            # Check schedule only when filter key exist.
+            if 'filter' not in u or len(u['filter']) == 0:
+                continue 
 
+            idx_list = self._find_indexes(u['filter'], scraped)
             schedules.update({ k: self._extract(v, u['url']) for k, v in idx_list.items() })
 
         return schedules

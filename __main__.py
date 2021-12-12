@@ -1,8 +1,8 @@
 
 import sys
 from importlib import import_module
-from pkgs.utils.args import *
-from pkgs.config import *
+from tournaments.utils.args import *
+from tournaments.config import *
 
 def main(club):
 

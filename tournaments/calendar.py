@@ -11,7 +11,7 @@ LOGGER = logging.getLogger(__name__)
 class CalendarService:
 
     @staticmethod
-    def register_google_calendar(self, service, calendar_id, schedules: List):
+    def register_google_calendar(service, calendar_id, schedules: List):
         """ Register events to specified google calendar """
 
         for schedule in schedules:
@@ -50,4 +50,3 @@ class CalendarService:
                 LOGGER.error('Failed to register event. %s', event['summary'])
 
             LOGGER.info('Completed event registering.')
-

@@ -32,6 +32,8 @@ class ScheduleRepository:
 
         for index, row in df[table[spec['match_type']]].loc[1:].iterrows():
             start = parse_jpn_date(row[0], row[3])
+
+            # ToDo Factory per calendar better
             yield ScheduleEntity.load({
                 'title': f'{inst["venue_name"]} {inst["match_type"]} {inst["level"]}',
                 'match_start': start,

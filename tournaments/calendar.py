@@ -34,7 +34,7 @@ class CalendarService:
             event['id'] = sha256(f'{event["summary"]}').hexdigest()
 
             try:
-                if is_event_registered(event['id']):
+                if is_event_registered(service, event['id']):
                     service.events()\
                         .update(
                             calendarId=calendar_id,

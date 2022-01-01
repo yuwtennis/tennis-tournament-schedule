@@ -1,6 +1,6 @@
 
 
-class CalendarPolicy:
+class CalendarSpecification:
 
     CALENDAR_TYPES = ['google_calendar']
 

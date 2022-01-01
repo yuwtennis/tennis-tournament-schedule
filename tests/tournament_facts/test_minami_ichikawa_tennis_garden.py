@@ -1,4 +1,4 @@
-from tournaments.tournament_facts_spec import Venue, SemiOpenSingles, AdvanceDoubles, AdvanceMixDoubles
+from tournaments.tournament_facts import Venue, SemiOpenSingles, AdvanceDoubles, AdvanceMixDoubles
 
 
 def test_venue_success():

@@ -18,7 +18,7 @@ class ScheduleEntity(Schema):
 class ScheduleRepository:
 
     @classmethod
-    def scrape_schedule_of_mitg_by_spec(cls, spec: Schema):
+    def scrape_schedule_of_mitg_by(cls, spec: Schema):
 
         inst = spec.dump({})
 

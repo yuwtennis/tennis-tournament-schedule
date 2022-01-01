@@ -29,7 +29,7 @@ def parse_jpn_date(jpn_date_str: str, starts_at: str) -> datetime:
 
 def is_event_registered(service, calendar_id, event_id):
     """
-    Return Google Calendar Id from summary.
+    Confirm if event is already registered or not.
 
     Parameters
     ----------
@@ -43,6 +43,7 @@ def is_event_registered(service, calendar_id, event_id):
         Confirmation result of event id
 
     """
-    events = service.events().list(calendarId=calendar_id, q=f"id={event_id}")
+    events = service.events().list(
+        calendarId=calendar_id, q=f"id={event_id}")
 
     return True if len(events['items']) > 0 else False

@@ -2,9 +2,10 @@
 import os
 from importlib import import_module
 import google.auth
+from googleapiclient.discovery import build
 from tournaments.schedule import ScheduleRepository
 from tournaments.calendar import CalendarService
-from tournaments.policies import CalendarPolicy
+from tournaments.specifications import CalendarSpecification
 
 
 def client():
@@ -15,15 +16,17 @@ def client():
     calendar_id = os.getenv('CALENDAR_ID')
 
     specs = import_module(venue_module_name, 'tournament.tournament_facts')
-    schedule = ScheduleRepository.scrape_schedule_of_mitg_by_spec(
+    schedules = ScheduleRepository.scrape_schedule_of_mitg(
         getattr(specs, tournament_spec_name))
 
-    if not CalendarPolicy.is_calendar_type_satisfied(calendar_type):
+    if not CalendarSpecification.is_calendar_type_satisfied(calendar_type):
         raise ValueError(
             'Wrong calendar type %s. Available types are %s',
             calendar_type,
-            CalendarPolicy.CALENDAR_TYPES)
+            CalendarSpecification.CALENDAR_TYPES)
 
     if calendar_type == 'google_calendar':
         credential, project = google.auth.default()
-        getattr(CalendarService, f'register_{calendar_type}')(schedule, credential, calendar_id)
+        service = build('calendar', 'v3', credential)
+        getattr(CalendarService, f'register_{calendar_type}')(
+            service, calendar_id, schedules)

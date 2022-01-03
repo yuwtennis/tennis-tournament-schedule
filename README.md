@@ -5,7 +5,7 @@ I participate in a tennis tournament and this app helps me to acknowledge the da
 
 ## What does it do ?
 
-Scrape (_scrape_app_) tournament schedules (_schedule entity_) from various tennis venues (_tournament_facts_spec_).
+Scrapes (_scrape_app_) tournament schedules (_schedule entity_) from various tennis venues (_tournament_facts_).
 Schedules then registered (_calendar_service_) to external calendar (e.g google calendar).
 
 ## How does it work ?

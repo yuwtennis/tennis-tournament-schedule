@@ -11,13 +11,14 @@ from tournaments.specifications import CalendarSpecification
 def client():
     """ """
     venue_module_name = os.getenv('VENUE_MODULE_NAME', 'minami_ichikawa_tennis_garden')
-    tournament_spec_name = os.getenv('TOURNAMENT_SPEC_NAME', 'SemiOpenSingles')
+    tournament_facts_name = os.getenv('TOURNAMENT_SPEC_NAME', 'SemiOpenSingles')
     calendar_type = os.getenv('CALENDAR_TYPE', 'google_calendar')
     calendar_id = os.getenv('CALENDAR_ID')
 
     specs = import_module(venue_module_name, 'tournament.tournament_facts')
-    schedules = ScheduleRepository.scrape_schedule_of_mitg(
-        getattr(specs, tournament_spec_name))
+    schedules = ScheduleRepository.scrape_schedule(
+        venue_module_name,
+        getattr(specs, tournament_facts_name))
 
     if not CalendarSpecification.is_calendar_type_satisfied(calendar_type):
         raise ValueError(

@@ -17,25 +17,42 @@ class ScheduleEntity(Schema):
 
 class ScheduleRepository:
 
-    @classmethod
-    def scrape_schedule_of_mitg_by(cls, spec: Schema):
+    @staticmethod
+    def scrape_schedule(venue_name, tournament_facts: Schema):
+        """
+        Scrape schedule from website
 
-        inst = spec.dump({})
+        Parameters
+        ----------
+        venue_name
+        tournament_facts
 
-        resp = rq.urlopen(inst['url'])
-        soup = BeautifulSoup(resp.read().decode('utf-8'), 'html.parser')
+        Yields
+        -------
+        ScheduleEntity
 
-        table = {s.string: idx for idx, s in
-                 enumerate(soup.find_all('p', style='text-align: center;'))}
+        """
 
-        df = pd.read_html(inst['url'])
+        inst = tournament_facts.dump({})
 
-        for index, row in df[table[spec['match_type']]].loc[1:].iterrows():
-            start = parse_jpn_date(row[0], row[3])
+        if venue_name == 'minami_ichikawa_tennis_garden':
+            resp = rq.urlopen(inst['url'])
+            soup = BeautifulSoup(resp.read().decode('utf-8'), 'html.parser')
 
-            # ToDo Factory per calendar better
-            yield ScheduleEntity.load({
-                'title': f'{inst["venue_name"]} {inst["match_type"]} {inst["level"]}',
-                'match_start': start,
-                'match_end': start+timedelta(hours=inst['duration_in_hours']),
-                'availability': row[5]})
+            table = {s.string: idx for idx, s in
+                     enumerate(soup.find_all('p', style='text-align: center;'))
+                     }
+
+            df = pd.read_html(inst['url'])
+
+            for index, row in df[table[inst['match_type']]].loc[1:].iterrows():
+                start = parse_jpn_date(row[0], row[3])
+
+                # ToDo Factory per calendar better
+                yield ScheduleEntity.load({
+                    'title': f'{inst["venue_name"]} {inst["match_type"]} {inst["level"]}',
+                    'match_start': start,
+                    'match_end': start+timedelta(hours=inst['duration_in_hours']),
+                    'availability': row[5]})
+        else:
+            raise ValueError

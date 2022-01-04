@@ -1,8 +1,8 @@
 
 import sys
 from importlib import import_module
-from pkgs.utils.args import *
-from pkgs.config import *
+from tournaments.utils.args import *
+from tournaments.config import *
 
 def main(club):
 
@@ -15,8 +15,13 @@ def main(club):
     # Instantiate
     t = c()
 
+    res = t.run()
+
+    # Display
+    t.display(res)
+
     # Notify
-    t.nofity_to_console()
+    t.notify_to_console(res)
 
 if __name__ == "__main__":
 

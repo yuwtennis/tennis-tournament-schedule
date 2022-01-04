@@ -10,30 +10,41 @@ class MinamiIchikawaTennisGarden(TennisClub):
         super().__init__(TENNIS_CLUB_1)
 
     """
-    Display the result
+    Notify the result
     """
-    def notify_to_console(self):
-        msgs = [ DISPLAY_FORMAT.format(k, d, s) for k, v in self._run().items() for d, s in v.items() ]
+    def notify_to_console(self, schedules):
+        msgs = [ DISPLAY_FORMAT.format(k, d, s) for k, v in schedules.items() for d, s in v.items() ]
 
         super().notify_to_console(msgs)
 
     """
+    Display the result
+    """
+    def display(self, schedules):
+        msgs = [ DISPLAY_FORMAT.format(k, d, s) for k, v in schedules.items() for d, s in v.items() ]
+
+        super().display(msgs)
+
+    """
     Run workflow
     """ 
-    def _run(self):
+    def run(self):
 
-        schedule = dict()
+        schedules = dict()
 
         for u in self.yaml['urls']:
             scraped = self._scrape(u['url'],
                 self.yaml['identifier']['key'],
                 self.yaml['identifier']['val'])
 
+            # Check schedule only when filter key exist.
+            if 'filter' not in u or len(u['filter']) == 0:
+                continue 
+
             idx_list = self._find_indexes(u['filter'], scraped)
+            schedules.update({ k: self._extract(v, u['url']) for k, v in idx_list.items() })
 
-            schedule.update({ k: self._extract(v, u['url']) for k, v in idx_list.items() })
-
-        return schedule
+        return schedules
 
     """
     Extract schedule according to tournament

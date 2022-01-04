@@ -12,4 +12,4 @@
       filter: ['男子ダブルス', 'アドバンス男子ダブルス']
     - type: mixdoubles
       url: https://minamiichikawa.jp/tennis_tournament/pg409.html
-      filter: ['混合ダブルス', 'アドバンス混合ダブルス']
+#      filter: ['混合ダブルス', 'アドバンス混合ダブルス']
